@@ -1,6 +1,5 @@
-Attribute VB_Name = "Module1"
+Attribute VB_Name = "Module2"
 Sub TickerCalculations()
-Attribute TickerCalculations.VB_ProcData.VB_Invoke_Func = " \n14"
 'This macro will take information from tickers and categorize and calculate yearly differences
 'A = 1 <ticker>
 'C = 3 <open>
@@ -21,6 +20,11 @@ Attribute TickerCalculations.VB_ProcData.VB_Invoke_Func = " \n14"
     Dim startPos As Double 'This value tells us when the new ticker started counting
     Dim tempMax As Double 'temp to find bonus question max
     Dim tempMaxPos As Double 'temp max pos for bonus questions
+    Dim tempMin As Double  'temp to find bonus min
+    Dim tempMinPos As Double 'temp min pos for bonus question
+    Dim tempMaxVol As Double
+    Dim tempMaxVolPos As Double
+    
     Dim j As Integer
     
     For j = 1 To Worksheets.Count
@@ -98,37 +102,29 @@ Attribute TickerCalculations.VB_ProcData.VB_Invoke_Func = " \n14"
             Cells(4, 15).Value = "Greatest Total Volume"
         End If
         
-        'Find greatest % increase
+        'Find greatest % increase, greatest % decrease, and Max Total Volume
         tempMax = 0
+        tempMin = 0
+        tempMaxVol = 0
         For i = 2 To Rows.Count
             If Not IsEmpty(Cells(i, 11).Value) And Cells(i, 11).Value > tempMax Then
                 tempMax = Cells(i, 11).Value
                 tempMaxPos = i
             End If
+            If Not IsEmpty(Cells(i, 11).Value) And Cells(i, 11).Value < tempMin Then
+                tempMin = Cells(i, 11).Value
+                tempMinPos = i
+            End If
+            If Not IsEmpty(Cells(i, 12).Value) And Cells(i, 12).Value > tempMaxVol Then
+                tempMaxVol = Cells(i, 12).Value
+                tempMaxVolPos = i
+            End If
         Next i
         Cells(2, 16).Value = Cells(tempMaxPos, 9).Value
         Cells(2, 17).Value = tempMax & "%"
-        
-        'Find greatest % decrease
-        tempMax = 0
-        For i = 2 To Rows.Count
-            If Not IsEmpty(Cells(i, 11).Value) And Cells(i, 11).Value < tempMax Then
-                tempMax = Cells(i, 11).Value
-                tempMaxPos = i
-            End If
-        Next i
-        Cells(3, 16).Value = Cells(tempMaxPos, 9).Value
-        Cells(3, 17).Value = tempMax & "%"
-        
-        'Find greatest total volume
-        tempMax = 0
-        For i = 2 To Rows.Count
-            If Not IsEmpty(Cells(i, 12).Value) And Cells(i, 12).Value > tempMax Then
-                tempMax = Cells(i, 12).Value
-                tempMaxPos = i
-            End If
-        Next i
-        Cells(4, 16).Value = Cells(tempMaxPos, 9).Value
-        Cells(4, 17).Value = tempMax
+        Cells(3, 16).Value = Cells(tempMinPos, 9).Value
+        Cells(3, 17).Value = tempMin & "%"
+        Cells(4, 16).Value = Cells(tempMaxVolPos, 9).Value
+        Cells(4, 17).Value = tempMaxVol
     Next j
 End Sub
