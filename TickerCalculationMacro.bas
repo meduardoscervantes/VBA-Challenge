@@ -1,4 +1,4 @@
-Attribute VB_Name = "Module2"
+Attribute VB_Name = "Module1"
 Sub TickerCalculations()
 'This macro will take information from tickers and categorize and calculate yearly differences
 'A = 1 <ticker>
@@ -61,6 +61,12 @@ Sub TickerCalculations()
                 tempTotalStock = 0
                 'Calculate yearly change
                 Cells(iPosCounter, 10).Value = Cells((i - 1), 6).Value - Cells(startPos, 3).Value
+                'Paint in the background
+                If Cells(i - 1, 10).Value < 0 Then
+                    Cells(i - 1, 10).Interior.Color = RGB(255, 0, 0) 'Change color to red
+                ElseIf Cells(i - 1, 10).Value > 0 Then
+                    Cells(i - 1, 10).Interior.Color = RGB(0, 255, 0) 'Change color to green
+                End If
                 'Calculate percentage change
                 If Cells(startPos, 3).Value > 0 Then
                     Cells(iPosCounter, 11).Value = Cells(iPosCounter, 10).Value / Cells(startPos, 3).Value * 100 & "%"
@@ -73,15 +79,6 @@ Sub TickerCalculations()
                 Cells(iPosCounter, 9).Value = Cells(i, 1).Value
                 'update starting position
                 startPos = i
-            End If
-        Next i
-        
-        'Color in the yearly change
-        For i = 2 To Rows.Count
-            If Not IsEmpty(Cells(i, 10)) And Cells(i, 10).Value < 0 Then
-                Cells(i, 10).Interior.Color = RGB(255, 0, 0) 'Change color to red
-            ElseIf Not IsEmpty(Cells(i, 10)) And Cells(i, 10).Value > 0 Then
-                Cells(i, 10).Interior.Color = RGB(0, 255, 0) 'Change color to green
             End If
         Next i
         
@@ -128,3 +125,4 @@ Sub TickerCalculations()
         Cells(4, 17).Value = tempMaxVol
     Next j
 End Sub
+
