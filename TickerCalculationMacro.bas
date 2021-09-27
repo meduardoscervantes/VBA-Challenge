@@ -62,10 +62,10 @@ Sub TickerCalculations()
                 'Calculate yearly change
                 Cells(iPosCounter, 10).Value = Cells((i - 1), 6).Value - Cells(startPos, 3).Value
                 'Paint in the background
-                If Cells(i - 1, 10).Value < 0 Then
-                    Cells(i - 1, 10).Interior.Color = RGB(255, 0, 0) 'Change color to red
-                ElseIf Cells(i - 1, 10).Value > 0 Then
-                    Cells(i - 1, 10).Interior.Color = RGB(0, 255, 0) 'Change color to green
+                If Cells(iPosCounter, 10).Value < 0 Then
+                    Cells(iPosCounter, 10).Interior.Color = RGB(255, 0, 0) 'Change color to red
+                ElseIf Cells(iPosCounter, 10).Value > 0 Then
+                    Cells(iPosCounter, 10).Interior.Color = RGB(0, 255, 0) 'Change color to green
                 End If
                 'Calculate percentage change
                 If Cells(startPos, 3).Value > 0 Then
@@ -125,4 +125,5 @@ Sub TickerCalculations()
         Cells(4, 17).Value = tempMaxVol
     Next j
 End Sub
+
 
