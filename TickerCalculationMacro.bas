@@ -29,6 +29,7 @@ Sub TickerCalculations()
     
     For j = 1 To Worksheets.Count
         Worksheets(j).Activate
+        LastRow = Cells(Rows.Count, 1).End(xlUp).Row
         'Declare column titles
         If IsEmpty(Cells(1, 9).Value) Then
             Cells(1, 9).Value = "Ticker"
@@ -50,7 +51,7 @@ Sub TickerCalculations()
         startPos = 2
         
         'Populate the data for each ticker
-        For i = 2 To Rows.Count
+        For i = 2 To (LastRow + 1)
             'Check ticker at i and working ticker
             If Cells(i, 1).Value = Cells(iPosCounter, 9).Value Then
                 tempTotalStock = tempTotalStock + Cells(i, 7).Value
@@ -103,7 +104,7 @@ Sub TickerCalculations()
         tempMax = 0
         tempMin = 0
         tempMaxVol = 0
-        For i = 2 To Rows.Count
+        For i = 2 To (LastRow + 1)
             If Not IsEmpty(Cells(i, 11).Value) And Cells(i, 11).Value > tempMax Then
                 tempMax = Cells(i, 11).Value
                 tempMaxPos = i
@@ -125,5 +126,4 @@ Sub TickerCalculations()
         Cells(4, 17).Value = tempMaxVol
     Next j
 End Sub
-
 
