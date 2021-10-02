@@ -1,4 +1,3 @@
-Attribute VB_Name = "Module1"
 Sub TickerCalculations()
 'This macro will take information from tickers and categorize and calculate yearly differences
 'A = 1 <ticker>
@@ -119,11 +118,10 @@ Sub TickerCalculations()
             End If
         Next i
         Cells(2, 16).Value = Cells(tempMaxPos, 9).Value
-        Cells(2, 17).Value = tempMax & "%"
+        Cells(2, 17).Value = tempMax * 100 & "%"
         Cells(3, 16).Value = Cells(tempMinPos, 9).Value
-        Cells(3, 17).Value = tempMin & "%"
+        Cells(3, 17).Value = tempMin * 100 & "%"
         Cells(4, 16).Value = Cells(tempMaxVolPos, 9).Value
         Cells(4, 17).Value = tempMaxVol
     Next j
 End Sub
-
